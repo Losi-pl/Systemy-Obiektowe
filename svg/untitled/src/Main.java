@@ -6,6 +6,6 @@ public class Main {
         p.x = 10;
         p.y = 20;
 
-        System.out.print(p.toString());
+        System.out.print(p.toSvg());
     }
 }
