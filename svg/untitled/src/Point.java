@@ -5,7 +5,19 @@ public class Point {
     { return "Point {x: " + x + ", " + y + "}"; }
 
     public String toSvg()
+    { return "<circle r=\"10\" cx=\"" + x + "\" cy=\"" + y + "\" fill=\"black\"/>"; }
+
+    public Point translate(float dx, float dy)
     {
-        return "<circle r=\"10\" cx=\"" + x + "\" cy=\"" + y + "\" fill=\"black\"/>";
+        x += dx;
+        y += dy;
+        return this;
+    }
+    public Point translated(float dx, float dy)
+    {
+        Point p = new Point();
+        p.x = x + dx;
+        p.y = y + dy;
+        return p;
     }
 }
