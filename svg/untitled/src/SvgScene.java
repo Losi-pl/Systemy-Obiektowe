@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,5 +43,29 @@ public class SvgScene {
 
         tmp += "\n</svg>";
         return tmp;
+    }
+
+    public void Save(String path, boolean fullSize) throws IOException {
+
+        FileWriter fw = new FileWriter(path);
+        if(fullSize)
+            fw.write(toSvg());
+        else
+        {
+            float max_x = 0, max_y = 0;
+            for (int i = 0; i < pols.size(); ++i)
+            {
+                var bb = pols.get(i).boundingBox();
+                if(max_x < bb.x() + bb.width())
+                    max_x = bb.x() + bb.width();
+                if(max_y < bb.y() + bb.height())
+                    max_y = bb.y() + bb.height();
+            }
+            float tmp_x = width, tmp_y = height;
+            width = max_x; height = max_y;
+            fw.write(toSvg());
+            width = tmp_x; height = tmp_y;
+        }
+        fw.close();
     }
 }
