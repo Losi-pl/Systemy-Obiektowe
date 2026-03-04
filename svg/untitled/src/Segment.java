@@ -38,6 +38,6 @@ public class Segment {
 
     @Override
     public String toString() {
-        return "Segment{ p1: " + p1.toString(true) + ", p2: " + p2.toString(true) + '}';
+        return "Segment{ p1: " + p1.toString(true) + ", p2: " + p2.toString(true) + " }";
     }
 }

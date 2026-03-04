@@ -15,6 +15,16 @@ public class Main {
                 new Segment(new Point(15, 0), new Point(0, -3))
         };
 
-        System.out.print(Segment.findLongest(segs).toString());
+        Polygon pol;
+        {
+            Point[] po = new Point[segs.length * 2];
+            for (int i = 0; i < segs.length; i++)
+            { po[i*2] = segs[i].getPoint1(); po[(i*2)+1] = segs[i].getPoint2(); }
+            pol = new Polygon(po);
+        }
+        System.out.println(pol);
+        System.out.println(pol.toSvg());
+
+        System.out.println(Segment.findLongest(segs).toString());
     }
 }
