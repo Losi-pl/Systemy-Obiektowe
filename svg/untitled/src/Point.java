@@ -1,9 +1,25 @@
 public class Point {
-    public float x, y;
+    private float x, y;
 
-    public Point() { }
+    public Point() { x = 0; y = 0; }
     public Point(float x, float y)
     { this.x = x; this.y = y; }
+
+    public float getX() {
+        return x;
+    }
+    public Point setX(float x) {
+        this.x = x; return this;
+    }
+
+    public float getY() {
+        return y;
+    }
+    public Point setY(float y) {
+        this.y = y;
+        return this;
+    }
+    public  Point set(float x, float y) { this.x = x; this.y = y; return this; }
 
     @Override
     public String toString()

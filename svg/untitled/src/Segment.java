@@ -6,7 +6,7 @@ public class Segment {
     { this.p1 = p1; this.p2 = p2; }
 
     public float length()
-    { return (float)Math.sqrt(Math.pow(Math.abs(p1.x - p2.x), 2) + Math.pow(Math.abs(p1.y - p2.y), 2)); }
+    { return (float)Math.sqrt(Math.pow(Math.abs(p1.getX() - p2.getX()), 2) + Math.pow(Math.abs(p1.getY() - p2.getY()), 2)); }
 
     public static Segment findLongest(Segment[] coll)
     {
