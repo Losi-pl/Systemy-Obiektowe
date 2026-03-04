@@ -10,6 +10,8 @@ public class Polygon {
             tmp[i] = new Point(points[i]);
         ps = tmp;
     }
+    public Polygon(Polygon pol)
+    { this(pol.ps); }
 
     public Point getPoint(int index)
     { return new Point(ps[index]); }
