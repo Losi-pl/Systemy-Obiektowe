@@ -1,12 +1,27 @@
 public class Segment {
-    public Point p1, p2;
+    private Point p1, p2;
 
-    public Segment() { }
+    public Segment() { p1 = new Point(); p2 = new Point(); }
     public Segment(Point p1, Point p2)
-    { this.p1 = p1; this.p2 = p2; }
+    { this.p1 = new Point(p1); this.p2 = new Point(p2); }
+    public  Segment(float p1_x, float p1_y, float p2_x, float p2_y)
+    { p1 = new Point(p1_x, p1_y); p2 = new Point(p2_x, p2_y); }
 
     public float length()
     { return (float)Math.sqrt(Math.pow(Math.abs(p1.getX() - p2.getX()), 2) + Math.pow(Math.abs(p1.getY() - p2.getY()), 2)); }
+
+    public Point getPoint1()
+    { return new Point(p1); }
+    public Point getPoint2()
+    { return new Point(p2); }
+    public Segment setPoint1(Point p) {
+        p1 = new Point(p);
+        return this;
+    }
+    public Segment setPoint2(Point p) {
+        p2 = new Point(p);
+        return this;
+    }
 
     public static Segment findLongest(Segment[] coll)
     {
@@ -23,6 +38,6 @@ public class Segment {
 
     @Override
     public String toString() {
-        return "Segment{ p1: " + p1 + ", p2: " + p2 + '}';
+        return "Segment{ p1: " + p1.toString(true) + ", p2: " + p2.toString(true) + '}';
     }
 }
