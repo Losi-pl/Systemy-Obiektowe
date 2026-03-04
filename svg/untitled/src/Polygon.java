@@ -32,4 +32,24 @@ public class Polygon {
             tmp += (ps[i].getX() + "," + ps[i].getY()) + (i < ps.length - 1 ? " " : "\" style=\"fill:white;stroke:black;stroke-width:1\" />");
         return tmp;
     }
+
+    public BoundingBox boundingBox()
+    {
+        float minX = ps[0].getX(), maxX = ps[0].getX(),
+              minY = ps[0].getY(), maxY = ps[0].getY();
+        for (int i = 0; i < ps.length; ++i)
+        {
+            if(minX > ps[i].getX())
+                minX = ps[i].getX();
+            if(maxX < ps[i].getX())
+                maxX = ps[i].getX();
+
+            if(minY > ps[i].getY())
+                minY = ps[i].getY();
+            if(maxY < ps[i].getY())
+                maxY = ps[i].getY();
+        }
+        return new BoundingBox(minX, minY, maxX - minX, maxY - minY);
+    }
 }
+
