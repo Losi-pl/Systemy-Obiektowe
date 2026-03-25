@@ -1,17 +1,25 @@
 public class Polygon {
     private Point[] ps;
+    private Style style;
 
     public Polygon()
-    { ps = new Point[0]; }
+    {
+        ps = new Point[0];
+        style = new Style("none", "black", 1);
+    }
 
-    public Polygon(Point[] points) {
+    public Polygon(Point[] points, Style style) {
         Point[] tmp = new Point[points.length];
         for (int i = 0; i < points.length; ++i)
             tmp[i] = new Point(points[i]);
         ps = tmp;
+        this.style = new Style(style);
+    }
+    public Polygon(Point[] points) {
+        this(points, new Style("none", "black", 1));
     }
     public Polygon(Polygon pol)
-    { this(pol.ps); }
+    { this(pol.ps, new Style("none", "black", 1)); }
 
     public Point getPoint(int index)
     { return new Point(ps[index]); }
@@ -29,7 +37,7 @@ public class Polygon {
         //<polygon points="220,10 300,210 170,250 123,234" style="fill:white;stroke:black;stroke-width:1" />
         String tmp = "<polygon points=\"";
         for (int i = 0; i < ps.length; ++i)
-            tmp += (ps[i].getX() + "," + ps[i].getY()) + (i < ps.length - 1 ? " " : "\" style=\"fill:white;stroke:black;stroke-width:1\" />");
+            tmp += (ps[i].getX() + "," + ps[i].getY()) + (i < ps.length - 1 ? " " : "\" " + style.toSvg() + " />");
         return tmp;
     }
 

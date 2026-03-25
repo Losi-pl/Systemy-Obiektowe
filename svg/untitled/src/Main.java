@@ -26,5 +26,10 @@ public class Main {
         System.out.println(pol.toSvg());
 
         System.out.println(Segment.findLongest(segs).toString());
+
+        Style s = new Style("Gold", "Black", 15);
+
+        System.out.println(s.toSvg(true));
+        System.out.println(s.toSvg(false));
     }
 }
