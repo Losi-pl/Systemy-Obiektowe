@@ -59,5 +59,21 @@ public class Polygon {
         }
         return new BoundingBox(minX, minY, maxX - minX, maxY - minY);
     }
+
+    public static Polygon Square(Segment intersection)
+    {
+        var minX = Math.min(intersection.getPoint1().getX(), intersection.getPoint2().getX());
+        var maxX = Math.max(intersection.getPoint1().getX(), intersection.getPoint2().getX());
+
+        var minY = Math.min(intersection.getPoint1().getY(), intersection.getPoint2().getY());
+        var maxY = Math.max(intersection.getPoint1().getY(), intersection.getPoint2().getY());
+
+        return new Polygon(new Point[] {
+                new Point(minX, minY),
+                new Point(maxX, minY),
+                new Point(maxX, maxY),
+                new Point(minX, maxY)
+            });
+    }
 }
 
