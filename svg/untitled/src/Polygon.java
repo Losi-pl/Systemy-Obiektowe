@@ -41,6 +41,7 @@ public class Polygon extends Shape {
         return tmp;
     }
 
+    @Override
     public BoundingBox boundingBox()
     {
         float minX = ps[0].getX(), maxX = ps[0].getX(),

@@ -5,13 +5,13 @@ import java.util.List;
 
 public class SvgScene {
     private float width, height;
-    private List<Polygon> pols;
+    private List<Shape> pols;
 
     public SvgScene(float width, float height)
     {
         this.width = width;
         this.height = height;
-        pols = new ArrayList<Polygon>();
+        pols = new ArrayList<Shape>();
     }
 
     public float getWidth()
@@ -23,14 +23,14 @@ public class SvgScene {
     public SvgScene setHeight(float height)
     { this.height = height; return this; }
 
-    public SvgScene addPolygon(Polygon pol)
+    public SvgScene addShape(Polygon pol)
     {
         pols.add(new Polygon(pol));
         return this;
     }
-    public Polygon getPolygon(int index)
+    public Shape getShape(int index)
     { return pols.get(index); }
-    public SvgScene setPolygon(int index, Polygon pol)
+    public SvgScene addShape(int index, Polygon pol)
     { pols.set(index, pol); return this; }
 
     public String toSvg()
