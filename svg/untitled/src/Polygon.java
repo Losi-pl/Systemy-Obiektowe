@@ -1,19 +1,18 @@
-public class Polygon {
+public class Polygon extends Shape {
     private Point[] ps;
-    private Style style;
 
     public Polygon()
     {
+        super(new Style("none", "black", 1));
         ps = new Point[0];
-        style = new Style("none", "black", 1);
     }
 
     public Polygon(Point[] points, Style style) {
+        super(new Style(style));
         Point[] tmp = new Point[points.length];
         for (int i = 0; i < points.length; ++i)
             tmp[i] = new Point(points[i]);
         ps = tmp;
-        this.style = new Style(style);
     }
     public Polygon(Point[] points) {
         this(points, new Style("none", "black", 1));
@@ -32,6 +31,7 @@ public class Polygon {
         return tmp;
     }
 
+    @Override
     public String toSvg()
     {
         //<polygon points="220,10 300,210 170,250 123,234" style="fill:white;stroke:black;stroke-width:1" />

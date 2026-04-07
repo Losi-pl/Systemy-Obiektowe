@@ -31,5 +31,8 @@ public class Main {
 
         System.out.println(s.toSvg(true));
         System.out.println(s.toSvg(false));
+
+        System.out.println(Segment.findLongest(segs).Perpendicular());
+        System.out.println(Polygon.Square(Segment.findLongest(segs)).toSvg());
     }
 }
