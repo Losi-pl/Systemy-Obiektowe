@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Systemy-Obiektore.iml" filepath="$PROJECT_DIR$/Systemy-Obiektore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Ver1/Ver1.iml" filepath="$PROJECT_DIR$/Ver1/Ver1.iml" />
     </modules>
   </component>
 </project>
