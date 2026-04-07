@@ -35,6 +35,15 @@ public class Segment {
             }
         return coll[lon_ind];
     }
+    public Segment Perpendicular() { return Perpendicular(false); }
+    public Segment Perpendicular(boolean horizontal)
+    {
+        Point Avg = new Point((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
+        if(!horizontal)
+            return new Segment(new Point(p1.getX(), Avg.getY() + (p1.getY() - Avg.getY())), new Point(p1.getX(), Avg.getY() + (p2.getY() - Avg.getY())));
+        else
+            return new Segment(new Point(Avg.getX() + (p1.getX() - Avg.getX()), p1.getY()), new Point(Avg.getX() + (p2.getX() - Avg.getX()), p2.getY()));
+    }
 
     @Override
     public String toString() {
