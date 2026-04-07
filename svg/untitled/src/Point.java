@@ -9,6 +9,7 @@ public class Point {
     public float getX() {
         return x;
     }
+    @SuppressWarnings({"unused", ""})
     public Point setX(float x) {
         this.x = x; return this;
     }
@@ -16,10 +17,13 @@ public class Point {
     public float getY() {
         return y;
     }
+    @SuppressWarnings({"unused", ""})
     public Point setY(float y) {
         this.y = y;
         return this;
     }
+
+    @SuppressWarnings({"unused", ""})
     public  Point set(float x, float y) { this.x = x; this.y = y; return this; }
 
     @Override
@@ -31,12 +35,14 @@ public class Point {
     public String toSvg()
     { return "<circle r=\"10\" cx=\"" + x + "\" cy=\"" + y + "\" fill=\"black\"/>"; }
 
+    @SuppressWarnings({"unused", ""})
     public Point translate(float dx, float dy)
     {
         x += dx;
         y += dy;
         return this;
     }
+    @SuppressWarnings({"unused", ""})
     public Point translated(float dx, float dy)
     {
         Point p = new Point();

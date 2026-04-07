@@ -1,9 +1,11 @@
 public class Segment {
     private Point p1, p2;
 
+    @SuppressWarnings({"unused", ""})
     public Segment() { p1 = new Point(); p2 = new Point(); }
     public Segment(Point p1, Point p2)
     { this.p1 = new Point(p1); this.p2 = new Point(p2); }
+    @SuppressWarnings({"unused", ""})
     public  Segment(float p1_x, float p1_y, float p2_x, float p2_y)
     { p1 = new Point(p1_x, p1_y); p2 = new Point(p2_x, p2_y); }
 
@@ -14,10 +16,12 @@ public class Segment {
     { return new Point(p1); }
     public Point getPoint2()
     { return new Point(p2); }
+    @SuppressWarnings({"unused", ""})
     public Segment setPoint1(Point p) {
         p1 = new Point(p);
         return this;
     }
+    @SuppressWarnings({"unused", ""})
     public Segment setPoint2(Point p) {
         p2 = new Point(p);
         return this;

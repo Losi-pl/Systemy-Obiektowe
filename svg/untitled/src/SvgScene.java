@@ -3,15 +3,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings({"unused", ""})
 public class SvgScene {
     private float width, height;
-    private List<Shape> pols;
+    private final List<Shape> pols;
 
     public SvgScene(float width, float height)
     {
         this.width = width;
         this.height = height;
-        pols = new ArrayList<Shape>();
+        pols = new ArrayList<>();
     }
 
     public float getWidth()
@@ -35,14 +36,13 @@ public class SvgScene {
 
     public String toSvg()
     {
-        String tmp = "<svg height=\"" + height + "\" width=\"" + width + "\" xmlns=\"http://www.w3.org/2000/svg\">";
-        for (int i = 0; i < pols.size(); ++i)
-        {
-            tmp += "\n    " + pols.get(i).toSvg();
+        StringBuilder tmp = new StringBuilder("<svg height=\"" + height + "\" width=\"" + width + "\" xmlns=\"http://www.w3.org/2000/svg\">");
+        for (Shape pol : pols) {
+            tmp.append("\n    ").append(pol.toSvg());
         }
 
-        tmp += "\n</svg>";
-        return tmp;
+        tmp.append("\n</svg>");
+        return tmp.toString();
     }
 
     public void Save(String path, boolean fullSize) throws IOException {
@@ -53,12 +53,11 @@ public class SvgScene {
         else
         {
             float max_x = 0, max_y = 0;
-            for (int i = 0; i < pols.size(); ++i)
-            {
-                var bb = pols.get(i).boundingBox();
-                if(max_x < bb.x() + bb.width())
+            for (Shape pol : pols) {
+                var bb = pol.boundingBox();
+                if (max_x < bb.x() + bb.width())
                     max_x = bb.x() + bb.width();
-                if(max_y < bb.y() + bb.height())
+                if (max_y < bb.y() + bb.height())
                     max_y = bb.y() + bb.height();
             }
             float tmp_x = width, tmp_y = height;

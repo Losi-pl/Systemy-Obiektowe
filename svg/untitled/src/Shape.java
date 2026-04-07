@@ -6,10 +6,12 @@ public abstract class Shape {
         this.style = style;
     }
 
+    @SuppressWarnings({"unused", ""})
     public void setStyle(Style style) {
         this.style = style;
     }
 
+    @SuppressWarnings({"unused", ""})
     public Style getStyle() {
         return style;
     }

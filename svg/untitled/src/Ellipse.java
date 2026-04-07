@@ -1,3 +1,4 @@
+@SuppressWarnings({"unused", ""})
 public class Ellipse extends Shape {
     Point center;
     float radius;
