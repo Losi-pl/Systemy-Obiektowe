@@ -1,4 +1,7 @@
+import com.google.common.base.Strings;
+
 import java.util.Locale;
+
 
 public class Polygon implements Shape{
     private Vec2[] points;
@@ -26,11 +29,12 @@ public class Polygon implements Shape{
         return new BoundingBox(xMin, yMin, xMax - xMin, yMax - yMin);
     }
 
-    public String toSvg()    {
+    public String toSvg(String attr)    {
         String pointsString = "";
         for(Vec2 point : points) {
             pointsString += point.x() + "," + point.y() + " ";
         }
-        return String.format(Locale.ENGLISH, "<polygon points=\"%s\" />", pointsString);
+        return String.format(Locale.ENGLISH, "<polygon points=\"%s\" %s/>", pointsString,
+                Strings.isNullOrEmpty(attr) ? "" : attr + ' ');
     }
 }

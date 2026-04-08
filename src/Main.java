@@ -8,12 +8,12 @@ public class Main {
                 new Vec2(150, 250)
         });
 
-        Polygon rectangle = new Polygon(new Vec2[]{
+        Polygon rectangle = new SolidFilledPolygon(new Vec2[]{
                 new Vec2(350, 0),
                 new Vec2(750, 0),
                 new Vec2(750, 200),
                 new Vec2(350, 200)
-        });
+        }, "Gold");
 
         Polygon pentagon = new Polygon(new Vec2[]{
                 new Vec2(0, 260),

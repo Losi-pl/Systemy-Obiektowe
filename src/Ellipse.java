@@ -1,3 +1,5 @@
+import com.google.common.base.Strings;
+
 import java.util.Locale;
 
 public class Ellipse implements Shape{
@@ -16,9 +18,9 @@ public class Ellipse implements Shape{
     }
 
     @Override
-    public String toSvg() {
-        return String.format(Locale.ENGLISH,"<ellipse rx=\"%f\" ry=\"%f\" cx=\"%f\" cy=\"%f\"/>",
-                rx,ry,center.x(),center.y());
+    public String toSvg(String attr) {
+        return String.format(Locale.ENGLISH,"<ellipse rx=\"%f\" ry=\"%f\" cx=\"%f\" cy=\"%f\" %s/>",
+                rx,ry,center.x(),center.y(), Strings.isNullOrEmpty(attr) ? "" : attr + ' ');
     }
 
 
