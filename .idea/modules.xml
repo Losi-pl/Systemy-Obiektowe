@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Systemy-Obiektore.iml" filepath="$PROJECT_DIR$/Systemy-Obiektore.iml" />
       <module fileurl="file://$PROJECT_DIR$/Ver1/Ver1.iml" filepath="$PROJECT_DIR$/Ver1/Ver1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/genealogy/genealogy.iml" filepath="$PROJECT_DIR$/genealogy/genealogy.iml" />
     </modules>
   </component>
 </project>
