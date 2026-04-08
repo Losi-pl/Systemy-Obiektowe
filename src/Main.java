@@ -28,7 +28,7 @@ public class Main {
         SvgScene scene = new SvgScene();
         scene.addShape(new SolidFillShapeDecorator(triangle, "Pink"));
         scene.addShape(rectangle);
-        scene.addShape(pentagon);
+        scene.addShape(new StrokeShapeDecorator(pentagon, "Cyan", 3));
         scene.addShape(new SolidFillShapeDecorator(ellipse, "Green"));
         scene.save("result.svg");
     }
