@@ -26,10 +26,10 @@ public class Main {
         Ellipse ellipse = new Ellipse(new Vec2(500, 700), 400, 100);
 
         SvgScene scene = new SvgScene();
-        scene.addShape(triangle);
+        scene.addShape(new SolidFillShapeDecorator(triangle, "Pink"));
         scene.addShape(rectangle);
         scene.addShape(pentagon);
-        scene.addShape(ellipse);
+        scene.addShape(new SolidFillShapeDecorator(ellipse, "Green"));
         scene.save("result.svg");
     }
 }
