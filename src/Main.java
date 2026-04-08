@@ -27,7 +27,8 @@ public class Main {
 
         SvgScene scene = new SvgScene();
         scene.addShape(new SolidFillShapeDecorator(triangle, "Pink"));
-        scene.addShape(rectangle);
+        scene.addShape(TransformationDecorator.Builder.Setup(rectangle)
+                .Translate(new Vec2(0, 50)).Finish());
         scene.addShape(new StrokeShapeDecorator(pentagon, "Cyan", 3));
         scene.addShape(new SolidFillShapeDecorator(ellipse, "Green"));
         scene.save("result.svg");
