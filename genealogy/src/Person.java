@@ -1,8 +1,9 @@
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class Person
+public class Person implements Comparable
 {
     String firstName, lastName;
     LocalDate birthDate;
@@ -30,7 +31,15 @@ public class Person
     {
         if(children.isEmpty())
             return null;
-        var opt = children.stream().max(((p1, p2) -> p1.birthDate.compareTo(p2.birthDate)));
+        var opt = children.stream().min(Person::compareTo);
         return opt.orElse(null);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if(!(o instanceof Person))
+            return 0;
+        else
+            return birthDate.compareTo(((Person)o).birthDate) * -1;
     }
 }
