@@ -15,5 +15,10 @@ public class Main {
 
         System.out.println(people.get(0).getYoungestChild().birthDate().getYear());
         System.out.println(people.get(0).getChildren().get(0).birthDate().getYear());
+
+        var f = new Family();
+        f.add(people.get(0), people.getFirst().getChildren().get(0), people.getFirst().getChildren().get(1));
+
+        System.out.println(f.get("Alice Noveda"));
     }
 }
