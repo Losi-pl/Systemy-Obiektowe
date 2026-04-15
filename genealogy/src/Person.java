@@ -25,4 +25,12 @@ public class Person
     {
         return children.add(child_or_prisoner);
     }
+
+    public Person getYoungestChild()
+    {
+        if(children.isEmpty())
+            return null;
+        var opt = children.stream().max(((p1, p2) -> p1.birthDate.compareTo(p2.birthDate)));
+        return opt.orElse(null);
+    }
 }

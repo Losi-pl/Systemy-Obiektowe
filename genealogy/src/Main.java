@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,11 @@ public class Main {
     public static void main(String[] args) {
         List<Person> people = new ArrayList<Person>();
 
-        System.out.println(people.size());
+        people.add(new Person("Jan", "Panowski", LocalDate.of(2000, 5, 18)));
+
+        people.get(0).adopt(new Person("Alice", "Novida", LocalDate.of(20010, 3, 21)));
+        people.get(0).adopt(new Person("Jake", "Thane", LocalDate.of(2005, 10, 30)));
+
+        System.out.println(people.get(0).getYoungestChild().firstName);
     }
 }
