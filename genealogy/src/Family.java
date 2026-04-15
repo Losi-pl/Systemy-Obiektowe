@@ -4,9 +4,10 @@ public class Family
 {
     private Map<String, Person> myFamily;
 
-    public void add(Person person)
+    public void add(Person... people)
     {
-        myFamily.put(person.firstName() + ' ' + person.lastName(), person);
+        for(Person p: people)
+            myFamily.put(p.firstName() + ' ' + p.lastName(), p);
     }
 
     public Person get(String key)
