@@ -1,13 +1,15 @@
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Person implements Comparable
 {
-    String firstName, lastName;
-    LocalDate birthDate;
-    Set<Person> children;
+    private String firstName, lastName;
+    private LocalDate birthDate;
+    private Set<Person> children;
+
+    public String firstName() { return firstName; }
+    public String lastName() { return lastName; }
+    public LocalDate birthDate() { return birthDate; }
 
     public Person(String firstName, String lastName, LocalDate birthDate)
     {
@@ -41,5 +43,12 @@ public class Person implements Comparable
             return 0;
         else
             return birthDate.compareTo(((Person)o).birthDate) * -1;
+    }
+
+    public List<Person> getChildren()
+    {
+        var list = new ArrayList<Person>(children);
+        list.sort(Comparator.reverseOrder());
+        return list;
     }
 }

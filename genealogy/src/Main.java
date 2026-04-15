@@ -10,9 +10,10 @@ public class Main {
 
         people.add(new Person("Jan", "Panowski", LocalDate.of(2000, 5, 18)));
 
-        people.get(0).adopt(new Person("Alice", "Novida", LocalDate.of(20010, 3, 21)));
+        people.get(0).adopt(new Person("Alice", "Noveda", LocalDate.of(2010, 3, 21)));
         people.get(0).adopt(new Person("Jake", "Thane", LocalDate.of(2005, 10, 30)));
 
-        System.out.println(people.get(0).getYoungestChild().firstName);
+        System.out.println(people.get(0).getYoungestChild().birthDate().getYear());
+        System.out.println(people.get(0).getChildren().get(0).birthDate().getYear());
     }
 }
