@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -5,7 +6,7 @@ import java.util.List;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         List<Person> people = new ArrayList<Person>();
 
         people.add(new Person("Jan", "Panowski", LocalDate.of(2000, 5, 18)));
@@ -16,9 +17,8 @@ public class Main {
         System.out.println(people.get(0).getYoungestChild().birthDate().getYear());
         System.out.println(people.get(0).getChildren().get(0).birthDate().getYear());
 
-        var f = new Family();
-        f.add(people.get(0), people.getFirst().getChildren().get(0), people.getFirst().getChildren().get(1));
+        var f = new Family(Main.class.getResource("/family.csv").openStream());
 
-        System.out.println(f.get("Alice Noveda"));
+        //System.out.println(f.get("Alice Noveda"));
     }
 }
