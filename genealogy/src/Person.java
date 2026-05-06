@@ -18,19 +18,21 @@ public class Person implements Comparable
     public String lastName() { return lastName; }
     public LocalDate birthDate() { return birthDate; }
 
-    public Person(String firstName, String lastName, LocalDate birthDate, Optional<LocalDate> deathDate)
-    {
+    public Person(String firstName, String lastName, LocalDate birthDate, Optional<LocalDate> deathDate) throws NegativeLifespanException {
+        //Age Check
+        if(deathDate.isPresent())
+            if(deathDate.get().isBefore(birthDate))
+                throw new NegativeLifespanException(birthDate, deathDate.get());
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
         children = new LinkedHashSet<Person>();
     }
-    public Person(String firstName, String lastName, LocalDate birthDate)
-    { this(firstName, lastName, birthDate, Optional.empty()); }
+    public Person(String firstName, String lastName, LocalDate birthDate) throws NegativeLifespanException { this(firstName, lastName, birthDate, Optional.empty()); }
 
-    public Person(String FirstName, String LastName)
-    {
+    public Person(String FirstName, String LastName) throws NegativeLifespanException {
         this(FirstName, LastName, LocalDate.now());
     }
 
