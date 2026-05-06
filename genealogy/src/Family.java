@@ -45,6 +45,7 @@ public class Family
             {
                 String[] name = null; // T: 1
                 LocalDate birthDate = null; // T: 2
+                Optional<LocalDate> deathDate = Optional.empty(); // T: 3
                 ArrayList<Person> parents = new ArrayList<>(); //T; 4
 
                 int ind = 0;
@@ -53,17 +54,20 @@ public class Family
                     {
                         case 1: name = c.split(" "); break;
                         case 2: birthDate = LocalDate.parse(c, DateTimeFormatter.ofPattern("dd.MM.yyyy")); break;
+                        case 3: if(!Strings.isNullOrEmpty(c)) deathDate = Optional.of(LocalDate.parse(c, DateTimeFormatter.ofPattern("dd.MM.yyyy"))); break;
                         case 4: if(!Strings.isNullOrEmpty(c)) parents.add(get(c).getFirst()); break;
                     }
 
                 // Validity check
                 if(name == null)
-                    throw new IOException();
+                    throw new IOException("No name present");
+                if(name.length != 2)
+                    throw new IOException("Name format invalid");
 
                 if(birthDate == null)
                     birthDate = LocalDate.now();
 
-                var p = new Person(name[0], name[1], birthDate);
+                var p = new Person(name[0], name[1], birthDate, deathDate);
                 for (var par: parents)
                     par.adopt(p);
                 add(p);
