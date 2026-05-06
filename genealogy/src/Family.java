@@ -9,7 +9,7 @@ import java.util.*;
 
 public class Family
 {
-    private Map<String, Set<Person>> myFamily = new HashMap<>();
+    private final Map<String, Set<Person>> myFamily = new HashMap<>();
 
     public Family() { }
     public  Family(InputStream stream) throws IOException {
@@ -33,9 +33,13 @@ public class Family
                     };
                 }
 
-                // Validity check
+                // Validity check: no unknowns
                 if(Arrays.stream(data_format).filter(t -> t == -1).findAny().isPresent())
-                    throw new IOException("Unknown column type");
+                    throw new IOException("Unknown column type found.");
+
+                // Validity check: no unknowns
+                if(Arrays.stream(data_format).filter(t -> t == 1).findAny().isEmpty())
+                    throw new IOException("Person name is required.");
             }
             else
             {
@@ -53,8 +57,11 @@ public class Family
                     }
 
                 // Validity check
-                if(name == null || birthDate == null)
+                if(name == null)
                     throw new IOException();
+
+                if(birthDate == null)
+                    birthDate = LocalDate.now();
 
                 var p = new Person(name[0], name[1], birthDate);
                 for (var par: parents)
