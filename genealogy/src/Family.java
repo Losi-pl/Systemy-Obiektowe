@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Family
 {
@@ -96,5 +97,10 @@ public class Family
         var list = new ArrayList<Person>(myFamily.get(key));
         list.sort(Comparator.naturalOrder());
         return list;
+    }
+
+    public ArrayList<Person> Everyone()
+    {
+        return new ArrayList<>(myFamily.values().stream().flatMap(Collection::stream).toList());
     }
 }

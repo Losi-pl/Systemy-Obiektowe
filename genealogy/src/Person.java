@@ -131,4 +131,7 @@ public class Person implements Comparable
         else
             throw new IOException("Index out of range");
     }
+
+    public static ArrayList<Person> fromCsv(InputStream csv) throws IOException
+    { return (new Family(csv)).Everyone(); }
 }
