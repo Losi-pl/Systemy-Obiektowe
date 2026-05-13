@@ -13,7 +13,7 @@ public class Family
     private final Map<String, Set<Person>> myFamily = new HashMap<>();
 
     public Family() { }
-    public  Family(InputStream stream) throws IOException {
+    public  Family(InputStream stream) throws IOException, AmbiguousPersonException {
         var content = new String(stream.readAllBytes());
         int[] data_format = null;
         for(String l: content.split("\n"))
@@ -68,6 +68,8 @@ public class Family
                 if(birthDate == null)
                     birthDate = LocalDate.now();
 
+                if(has(name[0] + " " + name[1]))
+                    throw new AmbiguousPersonException(name[0] + " " + name[1]);
                 var p = new Person(name[0], name[1], birthDate, deathDate);
                 for (var par: parents)
                     par.adopt(p);
@@ -91,6 +93,9 @@ public class Family
             }
         }
     }
+
+    public boolean has(String nane)
+    { return myFamily.containsKey(nane); }
 
     public ArrayList<Person> get(String key)
     {

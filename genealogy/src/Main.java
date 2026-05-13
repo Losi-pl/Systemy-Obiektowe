@@ -16,6 +16,9 @@ public class Main {
         } catch (IOException e) {
             System.out.println(e.getMessage());
             return;
+        } catch (AmbiguousPersonException e) {
+            System.out.println(e);
+            return;
         }
 
         System.out.println(f.get("Marek Kowalski").getFirst().firstName());
