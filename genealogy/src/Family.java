@@ -72,7 +72,15 @@ public class Family
                     throw new AmbiguousPersonException(name[0] + " " + name[1]);
                 var p = new Person(name[0], name[1], birthDate, deathDate);
                 for (var par: parents)
-                    par.adopt(p);
+                    try { par.adopt(p); }
+                    catch (ParentingAgeException ex)
+                    {
+                        System.out.print("Parent " + par.fullName() + " is under 15, do you want to allow him to adopt " + p.fullName() + "? [y/N]: ");
+                        String res = new Scanner(System.in).nextLine();
+                        if(res.equalsIgnoreCase("y"))
+                            try { par.adopt(p, /*allowBrakeLaw*/true); }
+                            catch (ParentingAgeException ignore) { }
+                    }
                 add(p);
             }
         }

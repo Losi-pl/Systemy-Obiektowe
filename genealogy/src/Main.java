@@ -2,6 +2,8 @@ import java.io.IOException;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
+//https://github.com/BartekDaniluk/OOP_2025_laby
 public class Main {
     public static void main(String[] args) {
         Family f;
@@ -16,8 +18,8 @@ public class Main {
         } catch (IOException e) {
             System.out.println(e.getMessage());
             return;
-        } catch (AmbiguousPersonException e) {
-            System.out.println(e);
+        } catch (AmbiguousPersonException ex) {
+            ex.printStackTrace();
             return;
         }
 

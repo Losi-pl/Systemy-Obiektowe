@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class Person implements Comparable
@@ -35,9 +36,11 @@ public class Person implements Comparable
     public Person(String FirstName, String LastName) throws NegativeLifespanException {
         this(FirstName, LastName, LocalDate.now());
     }
-
-    public boolean adopt(Person child_or_prisoner)
-    {
+    public boolean adopt(Person child_or_prisoner) throws ParentingAgeException
+    { return adopt(child_or_prisoner, false); }
+    public boolean adopt(Person child_or_prisoner, boolean allowBrakeLaw) throws ParentingAgeException {
+        if(ChronoUnit.YEARS.between(birthDate, LocalDate.now()) < 15 && !allowBrakeLaw)
+            throw new ParentingAgeException(this, child_or_prisoner);
         return children.add(child_or_prisoner);
     }
     public boolean kill() { return kill(LocalDate.now()); }
@@ -50,6 +53,8 @@ public class Person implements Comparable
         return true;
     }
 
+    public String fullName()
+    { return firstName + " " + lastName; }
     public boolean isAlive() { return deathDate.isPresent(); }
 
     public Person getYoungestChild()
