@@ -1,8 +1,7 @@
 import com.google.common.base.Strings;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -13,7 +12,7 @@ public class Person implements Comparable
     private String firstName, lastName;
     private LocalDate birthDate;
     private Optional<LocalDate> deathDate;
-    private Set<Person> children;
+    private transient Set<Person> children;
 
     public String firstName() { return firstName; }
     public String lastName() { return lastName; }
@@ -141,4 +140,21 @@ public class Person implements Comparable
 
     public static ArrayList<Person> fromCsv(InputStream csv) throws IOException, AmbiguousPersonException
     { return (new Family(csv)).Everyone(); }
+
+    @SuppressWarnings("unchecked")
+    public static List<Person> fromBin(InputStream stream)
+    {
+        try(var ser = new ObjectInputStream(stream))
+        { return (List<Person>) ser.readObject(); }
+        catch (IOException | ClassNotFoundException e)
+        { throw new RuntimeException(e); }
+    }
+
+    public static void toBin(ArrayList<Person> people, OutputStream stream)
+    {
+        try(var ser = new ObjectOutputStream(stream))
+        { ser.writeObject(people); }
+        catch (IOException e)
+        { throw new RuntimeException(e); }
+    }
 }
