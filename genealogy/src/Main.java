@@ -1,9 +1,5 @@
 import java.io.IOException;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-
-//https://github.com/BartekDaniluk/OOP_2025_laby
 public class Main {
     public static void main(String[] args) {
         Family f;
@@ -25,5 +21,13 @@ public class Main {
 
         System.out.println(f.get("Marek Kowalski").getFirst().firstName());
         System.out.println(addon.firstName());
+
+        PlantUMLRunner.setPath("jar/plantuml-1.2026.3.jar");
+
+        try { PlantUMLRunner.generateModel("@startuml\n" +
+                "Alice->Bob : Hello\n" +
+                "return ok\n" +
+                "@enduml", "out/png", "image"); }
+        catch (IOException ignore) { }
     }
 }
