@@ -6,13 +6,11 @@ import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Family
 {
     private final Map<String, Set<Person>> myFamily = new HashMap<>();
 
-    public Family() { }
     public  Family(InputStream stream) throws IOException, AmbiguousPersonException {
         var content = new String(stream.readAllBytes());
         int[] data_format = null;
@@ -46,7 +44,7 @@ public class Family
             {
                 String[] name = null; // T: 1
                 LocalDate birthDate = null; // T: 2
-                Optional<LocalDate> deathDate = Optional.empty(); // T: 3
+                LocalDate deathDate = null; // T: 3
                 ArrayList<Person> parents = new ArrayList<>(); //T; 4
 
                 int ind = 0;
@@ -55,7 +53,7 @@ public class Family
                     {
                         case 1: name = c.split(" "); break;
                         case 2: birthDate = LocalDate.parse(c, DateTimeFormatter.ofPattern("dd.MM.yyyy")); break;
-                        case 3: if(!Strings.isNullOrEmpty(c)) deathDate = Optional.of(LocalDate.parse(c, DateTimeFormatter.ofPattern("dd.MM.yyyy"))); break;
+                        case 3: if(!Strings.isNullOrEmpty(c)) deathDate = LocalDate.parse(c, DateTimeFormatter.ofPattern("dd.MM.yyyy")); break;
                         case 4: if(!Strings.isNullOrEmpty(c)) parents.add(get(c).getFirst()); break;
                     }
 
@@ -107,7 +105,7 @@ public class Family
 
     public ArrayList<Person> get(String key)
     {
-        var list = new ArrayList<Person>(myFamily.get(key));
+        var list = new ArrayList<>(myFamily.get(key));
         list.sort(Comparator.naturalOrder());
         return list;
     }

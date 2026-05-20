@@ -1,6 +1,6 @@
 import com.google.common.base.Strings;
-import net.sourceforge.plantuml.StringBuilder2;
 import org.apache.commons.lang3.StringUtils;
+import org.jspecify.annotations.Nullable;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -8,32 +8,35 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-public class Person implements Comparable
+@SuppressWarnings("unused")
+public class Person implements Comparable<Person>
 {
-    private String firstName, lastName;
-    private LocalDate birthDate;
-    private Optional<LocalDate> deathDate;
+    private final String firstName, lastName;
+    private final LocalDate birthDate;
+    private LocalDate deathDate;
     private final transient Set<Person> children;
-    private transient Set<Person> parents;
+    private final transient Set<Person> parents;
 
     public String firstName() { return firstName; }
     public String lastName() { return lastName; }
     public LocalDate birthDate() { return birthDate; }
 
-    public Person(String firstName, String lastName, LocalDate birthDate, Optional<LocalDate> deathDate) throws NegativeLifespanException {
+    public Person(String firstName, String lastName, LocalDate birthDate, @Nullable LocalDate deathDate) throws NegativeLifespanException {
         //Age Check
-        if(deathDate.isPresent())
-            if(deathDate.get().isBefore(birthDate))
-                throw new NegativeLifespanException(birthDate, deathDate.get());
+        if(deathDate != null)
+        {
+            if(deathDate.isBefore(birthDate))
+                throw new NegativeLifespanException(birthDate, deathDate);
+        }
 
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
-        children = new LinkedHashSet<Person>();
-        parents = new LinkedHashSet<Person>();
+        children = new LinkedHashSet<>();
+        parents = new LinkedHashSet<>();
     }
-    public Person(String firstName, String lastName, LocalDate birthDate) throws NegativeLifespanException { this(firstName, lastName, birthDate, Optional.empty()); }
+    public Person(String firstName, String lastName, LocalDate birthDate) throws NegativeLifespanException { this(firstName, lastName, birthDate, null); }
 
     public Person(String FirstName, String LastName) throws NegativeLifespanException {
         this(FirstName, LastName, LocalDate.now());
@@ -50,7 +53,7 @@ public class Person implements Comparable
     public boolean kill(LocalDate deathTime)
     {
         if(isAlive())
-            deathDate = Optional.of(deathTime);
+            deathDate = deathTime;
         else
             return false;
         return true;
@@ -58,7 +61,7 @@ public class Person implements Comparable
 
     public String fullName()
     { return firstName + " " + lastName; }
-    public boolean isAlive() { return deathDate.isPresent(); }
+    public boolean isAlive() { return deathDate != null; }
 
     public Person getYoungestChild()
     {
@@ -69,16 +72,13 @@ public class Person implements Comparable
     }
 
     @Override
-    public int compareTo(Object o) {
-        if(!(o instanceof Person))
-            return 0;
-        else
-            return birthDate.compareTo(((Person)o).birthDate) * -1;
+    public int compareTo(Person person) {
+        return birthDate.compareTo(person.birthDate) * -1;
     }
 
     public List<Person> getChildren()
     {
-        var list = new ArrayList<Person>(children);
+        var list = new ArrayList<>(children);
         list.sort(Comparator.reverseOrder());
         return list;
     }
@@ -86,7 +86,7 @@ public class Person implements Comparable
     public static Person fromCsvLine(InputStream csv, int line) throws IOException
     {
         var content = new String(csv.readAllBytes());
-        int[] data_format = null;
+        int[] data_format;
         var lines = content.split("\n");
         {
             data_format = new int[StringUtils.countMatches(lines[0], ',') + 1];
@@ -115,7 +115,7 @@ public class Person implements Comparable
         {
             String[] name = null; // T: 1
             LocalDate birthDate = null; // T: 2
-            Optional<LocalDate> deathDate = Optional.empty(); // T: 3
+            LocalDate deathDate = null; // T: 3
 
             int ind = 0;
             for(var c: lines[line + 1].split(","))
@@ -123,7 +123,7 @@ public class Person implements Comparable
                 {
                     case 1: name = c.split(" "); break;
                     case 2: birthDate = LocalDate.parse(c, DateTimeFormatter.ofPattern("dd.MM.yyyy")); break;
-                    case 3: if(!Strings.isNullOrEmpty(c)) deathDate = Optional.of(LocalDate.parse(c, DateTimeFormatter.ofPattern("dd.MM.yyyy"))); break;
+                    case 3: if(!Strings.isNullOrEmpty(c)) deathDate = LocalDate.parse(c, DateTimeFormatter.ofPattern("dd.MM.yyyy")); break;
                 }
 
             // Validity check
@@ -162,7 +162,7 @@ public class Person implements Comparable
         { throw new RuntimeException(e); }
     }
 
-    @SuppressWarnings("SpellCheckingInspection")
+    @SuppressWarnings({"RedundantSuppression", "SpellCheckingInspection"})
     public String plant()
     {
         var build = new StringBuilder();
