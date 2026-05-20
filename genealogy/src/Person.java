@@ -1,4 +1,5 @@
 import com.google.common.base.Strings;
+import net.sourceforge.plantuml.StringBuilder2;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
@@ -12,7 +13,8 @@ public class Person implements Comparable
     private String firstName, lastName;
     private LocalDate birthDate;
     private Optional<LocalDate> deathDate;
-    private transient Set<Person> children;
+    private final transient Set<Person> children;
+    private transient Set<Person> parents;
 
     public String firstName() { return firstName; }
     public String lastName() { return lastName; }
@@ -29,18 +31,20 @@ public class Person implements Comparable
         this.birthDate = birthDate;
         this.deathDate = deathDate;
         children = new LinkedHashSet<Person>();
+        parents = new LinkedHashSet<Person>();
     }
     public Person(String firstName, String lastName, LocalDate birthDate) throws NegativeLifespanException { this(firstName, lastName, birthDate, Optional.empty()); }
 
     public Person(String FirstName, String LastName) throws NegativeLifespanException {
         this(FirstName, LastName, LocalDate.now());
     }
+    @SuppressWarnings("UnusedReturnValue")
     public boolean adopt(Person child_or_prisoner) throws ParentingAgeException
     { return adopt(child_or_prisoner, false); }
     public boolean adopt(Person child_or_prisoner, boolean allowBrakeLaw) throws ParentingAgeException {
         if(ChronoUnit.YEARS.between(birthDate, LocalDate.now()) < 15 && !allowBrakeLaw)
             throw new ParentingAgeException(this, child_or_prisoner);
-        return children.add(child_or_prisoner);
+        return children.add(child_or_prisoner) && child_or_prisoner.parents.add(this);
     }
     public boolean kill() { return kill(LocalDate.now()); }
     public boolean kill(LocalDate deathTime)
@@ -156,5 +160,20 @@ public class Person implements Comparable
         { ser.writeObject(people); }
         catch (IOException e)
         { throw new RuntimeException(e); }
+    }
+
+    @SuppressWarnings("SpellCheckingInspection")
+    public String plant()
+    {
+        var build = new StringBuilder();
+        build.append("@startuml\n");
+        build.append("skinparam actorStyle awesome\n");
+        build.append(':').append(fullName()).append(": as Main\n");
+        for(var parent: parents)
+            build.append(':').append(parent.fullName()).append(": --> ").append("Main\n");
+        for (var child: children)
+            build.append("Main --> ").append(':').append(child.fullName()).append(":\n");
+        build.append("@enduml");
+        return build.toString();
     }
 }

@@ -24,11 +24,7 @@ public class Main {
 
         PlantUMLRunner.setPath("jar/plantuml-1.2026.3.jar");
 
-        try { PlantUMLRunner.generateModel("""
-                @startuml
-                Alice->Bob : Hello
-                return ok
-                @enduml""", "out/png", "image"); }
+        try { PlantUMLRunner.generateModel(f.get("Eris Greyrat").getFirst().plant(), "out/png", "image"); }
         catch (IOException ignore) { }
     }
 }
