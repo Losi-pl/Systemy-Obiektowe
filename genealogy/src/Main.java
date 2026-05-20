@@ -15,7 +15,7 @@ public class Main {
             System.out.println(e.getMessage());
             return;
         } catch (AmbiguousPersonException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace(System.err);
             return;
         }
 
@@ -24,10 +24,11 @@ public class Main {
 
         PlantUMLRunner.setPath("jar/plantuml-1.2026.3.jar");
 
-        try { PlantUMLRunner.generateModel("@startuml\n" +
-                "Alice->Bob : Hello\n" +
-                "return ok\n" +
-                "@enduml", "out/png", "image"); }
+        try { PlantUMLRunner.generateModel("""
+                @startuml
+                Alice->Bob : Hello
+                return ok
+                @enduml""", "out/png", "image"); }
         catch (IOException ignore) { }
     }
 }
