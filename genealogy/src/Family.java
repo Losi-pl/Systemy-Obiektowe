@@ -114,4 +114,28 @@ public class Family
     {
         return new ArrayList<>(myFamily.values().stream().flatMap(Collection::stream).toList());
     }
+
+    @SuppressWarnings({"RedundantSuppression", "SpellCheckingInspection"})
+    public static String plant(List<Person> people)
+    {
+        var build = new StringBuilder();
+        build.append("@startuml\n");
+        build.append("skinparam actorStyle awesome\n");
+        for(var person: people)
+            build.append(':').append(person.fullName()).append(": as ")
+                    .append(person.hashCode()).append('\n');
+        for (var person: people)
+        {
+            person.getChildren().stream().filter(people::contains).forEach(ch ->
+                build.append(person.hashCode()).append(" --> ").append(ch.hashCode()).append('\n'));
+        }
+        build.append("@enduml");
+        return build.toString();
+    }
+
+    public String plant()
+    {
+        var rez = this.myFamily.values().stream().flatMap(Collection::stream).toList();
+        return plant(rez);
+    }
 }
