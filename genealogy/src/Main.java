@@ -1,5 +1,6 @@
 import java.io.IOException;
 
+//https://github.com/BartekDaniluk/OOP_2025_laby
 public class Main {
     public static void main(String[] args) {
         Family f;
