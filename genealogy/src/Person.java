@@ -63,6 +63,11 @@ public class Person implements Comparable<Person>
     { return firstName + " " + lastName; }
     public boolean isAlive() { return deathDate != null; }
 
+    public float age()
+    {
+        return ChronoUnit.DAYS.between(birthDate, deathDate == null ? LocalDate.now() : deathDate) / 365.2f;
+    }
+
     public Person getYoungestChild()
     {
         if(children.isEmpty())
@@ -189,4 +194,10 @@ public class Person implements Comparable<Person>
         return list;
     }
 
+    public static List<Person> inOrderOfAge(List<Person> people)
+    {
+        var list = new ArrayList<>(people);
+        list.sort((a, b) -> Float.compare(b.age(), a.age()));
+        return list;
+    }
 }
