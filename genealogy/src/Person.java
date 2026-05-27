@@ -1,3 +1,4 @@
+import com.google.common.base.Function;
 import com.google.common.base.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.jspecify.annotations.Nullable;
@@ -7,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.stream.Stream;
 
 @SuppressWarnings("unused")
 public class Person implements Comparable<Person>
@@ -168,16 +170,20 @@ public class Person implements Comparable<Person>
     }
 
     @SuppressWarnings({"RedundantSuppression", "SpellCheckingInspection"})
-    public String plant()
+    public String plant(Function<String, String> postProcess)
     {
         var build = new StringBuilder();
         build.append("@startuml\n");
         build.append("skinparam actorStyle awesome\n");
-        build.append(':').append(fullName()).append(": as Main\n");
+        build.append(postProcess.apply("actor :" + this.fullName() + ':')).append('\n');
+        Stream.of(parents, children).flatMap(Collection::stream).forEach(p ->
+            build.append(postProcess.apply("actor :" + p.fullName() + ':')).append('\n')
+        );
+
         for(var parent: parents)
-            build.append(':').append(parent.fullName()).append(": --> ").append("Main\n");
+            build.append(postProcess.apply(':' + parent.fullName() + ": --> :" + this.fullName() + ':')).append('\n');
         for (var child: children)
-            build.append("Main --> ").append(':').append(child.fullName()).append(":\n");
+            build.append(postProcess.apply(':' + this.fullName() + ": --> :" + child.fullName() + ":")).append('\n');
         build.append("@enduml");
         return build.toString();
     }
