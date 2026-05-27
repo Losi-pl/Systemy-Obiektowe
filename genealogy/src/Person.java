@@ -181,4 +181,12 @@ public class Person implements Comparable<Person>
     {
         return people.stream().filter(p -> p.fullName().contains(sentence)).toList();
     }
+
+    public static List<Person> inOrderOfBirth(List<Person> people)
+    {
+        var list = new ArrayList<>(people);
+        list.sort(Comparator.naturalOrder());
+        return list;
+    }
+
 }
