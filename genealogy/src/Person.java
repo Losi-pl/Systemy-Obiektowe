@@ -200,4 +200,9 @@ public class Person implements Comparable<Person>
         list.sort((a, b) -> Float.compare(b.age(), a.age()));
         return list;
     }
+
+    public static Optional<Person> oldest(List<Person> people)
+    {
+        return people.stream().filter(Person::isAlive).max((a, b) -> Float.compare(a.age(), b.age()));
+    }
 }
