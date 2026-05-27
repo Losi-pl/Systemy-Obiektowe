@@ -25,10 +25,13 @@ public class Main {
 
         PlantUMLRunner.setPath("jar/plantuml-1.2026.3.jar");
 
-        try { PlantUMLRunner.generateModel(f.get("Eris Greyrat").getFirst().plant(s -> s + " #Yellow"), "out/png", "image1"); }
+        var target = f.get("Eris Greyrat").getFirst();
+        var fam = Person.inOrderOfAge(target.immediateFamily()).reversed();
+
+        try { PlantUMLRunner.generateModel(target.plant(p -> fam.getFirst() == p, s -> s + " #Yellow"), "out/png", "image1"); }
         catch (IOException ignore) { }
 
-        try { PlantUMLRunner.generateModel(f.get("Eris Greyrat").getFirst().plant(s -> s ), "out/png", "image2"); }
+        try { PlantUMLRunner.generateModel(target.plant(null, null), "out/png", "image2"); }
         catch (IOException ignore) { }
     }
 }

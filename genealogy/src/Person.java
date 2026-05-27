@@ -1,4 +1,5 @@
 import com.google.common.base.Function;
+import com.google.common.base.Predicate;
 import com.google.common.base.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.jspecify.annotations.Nullable;
@@ -90,6 +91,11 @@ public class Person implements Comparable<Person>
         return list;
     }
 
+    public List<Person> immediateFamily()
+    {
+        return Stream.of(parents, Set.of(this), children).flatMap(Collection::stream).toList();
+    }
+
     public static Person fromCsvLine(InputStream csv, int line) throws IOException
     {
         var content = new String(csv.readAllBytes());
@@ -170,20 +176,21 @@ public class Person implements Comparable<Person>
     }
 
     @SuppressWarnings({"RedundantSuppression", "SpellCheckingInspection"})
-    public String plant(Function<String, String> postProcess)
+    public String plant(@Nullable Predicate<Person> predicate, @Nullable Function<String, String> postProcess)
     {
         var build = new StringBuilder();
         build.append("@startuml\n");
         build.append("skinparam actorStyle awesome\n");
-        build.append(postProcess.apply("actor :" + this.fullName() + ':')).append('\n');
-        Stream.of(parents, children).flatMap(Collection::stream).forEach(p ->
-            build.append(postProcess.apply("actor :" + p.fullName() + ':')).append('\n')
-        );
+        var family = immediateFamily();
+        for (var person: family)
+            build.append((predicate != null && predicate.apply(person) && postProcess != null) ? postProcess.apply(
+                    "actor :" + person.fullName() + ':') :
+                    "actor :" + person.fullName() + ':').append('\n');
 
         for(var parent: parents)
-            build.append(postProcess.apply(':' + parent.fullName() + ": --> :" + this.fullName() + ':')).append('\n');
+            build.append(':').append(parent.fullName()).append(": --> :").append(this.fullName()).append(":\n");
         for (var child: children)
-            build.append(postProcess.apply(':' + this.fullName() + ": --> :" + child.fullName() + ":")).append('\n');
+            build.append(':').append(this.fullName()).append(": --> :").append(child.fullName()).append(":\n");
         build.append("@enduml");
         return build.toString();
     }

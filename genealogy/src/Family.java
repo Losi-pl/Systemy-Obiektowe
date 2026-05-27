@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-@SuppressWarnings({"SpellCheckingInspection", "RedundantSuppressionz"})
+@SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression", "unused"})
 public class Family
 {
     private final Map<String, Set<Person>> myFamily = new HashMap<>();
@@ -110,6 +110,7 @@ public class Family
         list.sort(Comparator.naturalOrder());
         return list;
     }
+
 
     public ArrayList<Person> Everyone()
     {
