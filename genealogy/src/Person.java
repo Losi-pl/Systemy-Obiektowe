@@ -176,4 +176,9 @@ public class Person implements Comparable<Person>
         build.append("@enduml");
         return build.toString();
     }
+
+    public static List<Person> hasThis(String sentence, List<Person> people)
+    {
+        return people.stream().filter(p -> p.fullName().contains(sentence)).toList();
+    }
 }

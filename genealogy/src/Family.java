@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+@SuppressWarnings({"SpellCheckingInspection", "RedundantSuppressionz"})
 public class Family
 {
     private final Map<String, Set<Person>> myFamily = new HashMap<>();
