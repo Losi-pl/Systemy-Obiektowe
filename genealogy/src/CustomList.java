@@ -19,12 +19,35 @@ public abstract class CustomList<T> {
         if(last == null)
             last = wrap;
     }
+    public boolean add(T value)
+    {
+        try {
+            addLast(value);
+            return true;
+        }
+        catch (Exception ignored)
+        {
+            return false;
+        }
+    }
 
     public T getFirst() {
         return first.value;
     }
     public T getLast() {
         return first.value;
+    }
+
+    public T get(int index)
+    {
+        try {
+            Node n = first;
+            for(int i = 0; i < index; i++)
+                n = (Node) n.next;
+            return n.value;
+        }
+        catch (NullPointerException ignored)
+        { throw new IndexOutOfBoundsException(); }
     }
 
     public boolean removeLast() {
@@ -57,6 +80,16 @@ public abstract class CustomList<T> {
         return true;
     }
 
+    public int size() {
+        var c = first;
+        var count = c != null ? 1 : 0;
+        while (c != null)
+        {
+            c = (Node)c.next;
+            count++;
+        }
+        return count;
+    }
 
     private class Node {
         public Object previous; //For whatever damned reason if I try using Node here the code ealier will refuze to detect this class
